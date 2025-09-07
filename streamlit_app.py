@@ -18,13 +18,13 @@ st.markdown("""
     <style>
     /* Fondo general */
     .stApp {
-        background-color: #f4f6f9; /* gris neutro claro */
+        background-color: #f4f6f9;
         color: #212121;
     }
 
     /* Mensajes del usuario (derecha, azul sobrio) */
     [data-testid="stChatMessage"][data-testid="user"] {
-        background-color: #1976d2;
+        background-color: #1976d2 !important;
         border-radius: 18px 18px 0px 18px;
         padding: 10px; margin: 6px 0;
         max-width: 70%;
@@ -32,12 +32,12 @@ st.markdown("""
         box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
     }
     [data-testid="stChatMessage"][data-testid="user"] * {
-        color: #ffffff !important;  /* fuerza blanco en texto */
+        color: #ffffff !important;   /* texto siempre blanco */
     }
 
     /* Mensajes del asistente (izquierda, gris claro) */
     [data-testid="stChatMessage"][data-testid="assistant"] {
-        background-color: #e0e0e0;
+        background-color: #e0e0e0 !important;
         border-radius: 18px 18px 18px 0px;
         padding: 10px; margin: 6px 0;
         max-width: 70%;
@@ -45,13 +45,13 @@ st.markdown("""
         box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
     }
     [data-testid="stChatMessage"][data-testid="assistant"] * {
-        color: #212121 !important;  /* fuerza gris oscuro en texto */
+        color: #212121 !important;   /* texto siempre oscuro */
     }
 
     /* Sidebar */
     [data-testid="stSidebar"] {
-        background-color: #263238;
-        color: #ffffff;
+        background-color: #263238 !important; /* gris oscuro neutro */
+        color: #ffffff !important;
     }
 
     /* Botones del sidebar */
