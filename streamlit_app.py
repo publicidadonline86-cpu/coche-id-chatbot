@@ -45,7 +45,7 @@ st.markdown("""
 
 # --- Encabezado principal ---
 st.image(
-    "https://github.com/82fde8ac-7b1e-4619-8ca9-a785f2cde80c",
+    "https://github.com/publicidadonline86-cpu/coche-id-chatbot/blob/0f05167a03f0da0a0f2e97a0572f3d492912aaa1/Logo.png",
     width=100
 )  # 🔧 cambia por tu logo
 st.title("🚗 Chatbot de Coche ID")
