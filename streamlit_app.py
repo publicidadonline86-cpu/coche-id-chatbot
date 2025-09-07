@@ -16,20 +16,51 @@ st.set_page_config(
 # --- CSS para personalizar estilo ---
 st.markdown("""
     <style>
-    .stApp { background-color: #1e1e1e; color: #f0f0f0; }
+    /* Fondo general */
+    .stApp {
+        background-color: #f4f6f9; /* gris neutro claro */
+        color: #212121; /* texto en gris oscuro para contraste */
+    }
+
+    /* Mensajes del usuario (derecha, azul sobrio) */
     [data-testid="stChatMessage"][data-testid="user"] {
-        background-color: #005b96;
+        background-color: #1976d2; /* azul profesional */
         color: white;
-        border-radius: 12px;
-        padding: 10px; margin: 5px 0;
+        border-radius: 18px 18px 0px 18px;
+        padding: 10px; margin: 6px 0;
+        max-width: 70%;
+        margin-left: auto;
+        box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
     }
+
+    /* Mensajes del asistente (izquierda, gris claro) */
     [data-testid="stChatMessage"][data-testid="assistant"] {
-        background-color: #2a2a2a;
-        color: #f0f0f0;
-        border-radius: 12px;
-        padding: 10px; margin: 5px 0;
+        background-color: #e0e0e0;
+        color: #212121;
+        border-radius: 18px 18px 18px 0px;
+        padding: 10px; margin: 6px 0;
+        max-width: 70%;
+        margin-right: auto;
+        box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
     }
-    [data-testid="stSidebar"] { background-color: #121212; color: #f0f0f0; }
+
+    /* Sidebar */
+    [data-testid="stSidebar"] {
+        background-color: #263238; /* gris oscuro neutro */
+        color: #ffffff; /* letras blancas */
+    }
+
+    /* Botones del sidebar */
+    [data-testid="stSidebar"] button {
+        background-color: #1976d2 !important; /* azul profesional */
+        color: white !important;
+        border-radius: 8px;
+        border: none;
+    }
+    [data-testid="stSidebar"] button:hover {
+        background-color: #0d47a1 !important; /* azul más oscuro al pasar el ratón */
+        color: #ffffff !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
