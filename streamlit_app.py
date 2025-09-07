@@ -19,56 +19,54 @@ st.markdown("""
     /* Fondo general */
     .stApp {
         background-color: #f4f6f9; /* gris neutro claro */
-        color: #212121; /* texto principal en gris oscuro */
+        color: #212121;
     }
 
     /* Mensajes del usuario (derecha, azul sobrio) */
     [data-testid="stChatMessage"][data-testid="user"] {
-        background-color: #1976d2; /* azul profesional */
-        color: #ffffff;
+        background-color: #1976d2;
         border-radius: 18px 18px 0px 18px;
         padding: 10px; margin: 6px 0;
         max-width: 70%;
         margin-left: auto;
         box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
-        word-wrap: break-word;
+    }
+    [data-testid="stChatMessage"][data-testid="user"] * {
+        color: #ffffff !important;  /* fuerza blanco en texto */
     }
 
     /* Mensajes del asistente (izquierda, gris claro) */
     [data-testid="stChatMessage"][data-testid="assistant"] {
         background-color: #e0e0e0;
-        color: #212121;
         border-radius: 18px 18px 18px 0px;
         padding: 10px; margin: 6px 0;
         max-width: 70%;
         margin-right: auto;
         box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
-        word-wrap: break-word;
+    }
+    [data-testid="stChatMessage"][data-testid="assistant"] * {
+        color: #212121 !important;  /* fuerza gris oscuro en texto */
     }
 
     /* Sidebar */
     [data-testid="stSidebar"] {
-        background-color: #263238; /* gris oscuro */
-        color: #ffffff; /* texto blanco */
+        background-color: #263238;
+        color: #ffffff;
     }
 
     /* Botones del sidebar */
     [data-testid="stSidebar"] button {
-        background-color: #1976d2 !important; /* azul profesional */
-        color: #ffffff !important;            /* texto blanco forzado */
+        background-color: #1976d2 !important;
+        color: #ffffff !important;
         border-radius: 8px;
         border: none;
-        font-weight: 600;                     /* más grosor para legibilidad */
-        text-shadow: 0px 0px 2px rgba(0,0,0,0.4); /* fix para iPhone/Safari */
+        font-weight: 600;
+        text-shadow: 0px 0px 2px rgba(0,0,0,0.4);
     }
-
-    /* Hover de botones */
     [data-testid="stSidebar"] button:hover {
-        background-color: #0d47a1 !important; /* azul más oscuro */
+        background-color: #0d47a1 !important;
         color: #ffffff !important;
     }
-
-    /* Forzar color en cualquier texto interno de botones (fix iOS) */
     [data-testid="stSidebar"] button * {
         color: #ffffff !important;
     }
