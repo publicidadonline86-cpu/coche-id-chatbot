@@ -15,8 +15,8 @@ st.set_page_config(
 
 # --- Encabezado principal ---
 st.image(
-    "https://raw.githubusercontent.com/TU-USUARIO/coche-id-chatbot/main/logo.png",
-    width=120
+    "https://raw.githubusercontent.com/publicidadonline86-cpu/coche-id-chatbot/refs/heads/main/Logo.png",
+    width=220
 )  # Cambia por tu logo en GitHub
 st.title("🚗 Chatbot de Coche ID")
 st.caption("Demo de Chatbot de Coche ID – Tu Asistente Interactivo")
@@ -103,6 +103,8 @@ def procesar_pregunta(pregunta):
     mostrar_mensaje("assistant", reply)
 
 # --- Sidebar con botones ---
+pregunta_sidebar = None  # variable para almacenar la pregunta seleccionada
+
 with st.sidebar:
     st.header("ℹ️ Información")
     st.write("Este chatbot responde dudas sobre la app **Coche ID**. ")
@@ -115,19 +117,23 @@ with st.sidebar:
     st.markdown("### Preguntas rápidas")
 
     if st.button("¿Cómo registro mi coche?"):
-        procesar_pregunta("¿Cómo registro mi coche?")
+        pregunta_sidebar = "¿Cómo registro mi coche?"
 
     if st.button("¿Cómo veo el historial de mi coche?"):
-        procesar_pregunta("¿Cómo veo el historial de mi coche?")
+        pregunta_sidebar = "¿Cómo veo el historial de mi coche?"
 
     if st.button("Tengo un problema mecánico"):
-        procesar_pregunta("Mi coche tiene un problema mecánico, ¿qué hago?")
+        pregunta_sidebar = "Mi coche tiene un problema mecánico, ¿qué hago?"
 
     if st.button("¿Dónde encuentro talleres cercanos?"):
-        procesar_pregunta("¿Dónde encuentro talleres cercanos?")
+        pregunta_sidebar = "¿Dónde encuentro talleres cercanos?"
 
     if st.button("¿Qué ofrece la función GPS de Coche ID?"):
-        procesar_pregunta("¿Qué servicios ofrece la función GPS de Coche ID?")
+        pregunta_sidebar = "¿Qué servicios ofrece la función GPS de Coche ID?"
+
+# --- Procesar pregunta del sidebar ---
+if pregunta_sidebar:
+    procesar_pregunta(pregunta_sidebar)
 
 # --- Input del usuario ---
 if prompt := st.chat_input("Escribe tu pregunta sobre Coche ID..."):
