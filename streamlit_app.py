@@ -16,30 +16,20 @@ st.set_page_config(
 # --- CSS para personalizar estilo ---
 st.markdown("""
     <style>
-    /* Fondo general */
-    .stApp {
-        background-color: #f7f9fc;
-    }
-    /* Mensajes del usuario */
-    .stChatMessage.user {
-        background-color: #e6f7ff;
-        border: 1px solid #91d5ff;
+    .stApp { background-color: #1e1e1e; color: #f0f0f0; }
+    [data-testid="stChatMessage"][data-testid="user"] {
+        background-color: #005b96;
+        color: white;
         border-radius: 12px;
-        padding: 10px;
-        margin: 5px 0;
+        padding: 10px; margin: 5px 0;
     }
-    /* Mensajes del asistente */
-    .stChatMessage.assistant {
-        background-color: #fafafa;
-        border: 1px solid #d9d9d9;
+    [data-testid="stChatMessage"][data-testid="assistant"] {
+        background-color: #2a2a2a;
+        color: #f0f0f0;
         border-radius: 12px;
-        padding: 10px;
-        margin: 5px 0;
+        padding: 10px; margin: 5px 0;
     }
-    /* Sidebar */
-    .css-1d391kg {
-        background-color: #f0f5ff;
-    }
+    [data-testid="stSidebar"] { background-color: #121212; color: #f0f0f0; }
     </style>
 """, unsafe_allow_html=True)
 
