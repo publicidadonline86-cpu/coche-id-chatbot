@@ -46,37 +46,10 @@ st.markdown("""
 # --- Encabezado principal ---
 st.image(
     "https://raw.githubusercontent.com/publicidadonline86-cpu/coche-id-chatbot/refs/heads/main/Logo.png",
-    width=100
-)  # 🔧 cambia por tu logo
+    width=200
+)  # Cambia la URL por la de tu logo en GitHub
 st.title("🚗 Chatbot de Coche ID")
-st.caption("Demo de Chatbot de Coche ID – Tu asistente interactivo")
-
-# --- Sidebar ---
-with st.sidebar:
-    st.header("ℹ️ Información")
-    st.write("Este chatbot responde dudas sobre la app **Coche ID**. ")
-    st.write(
-        "Puede ayudarte a resolver **problemas mecánicos comunes** "
-        "y recomendarte servicios adicionales con la **función GPS**, "
-        "como encontrar talleres cercanos o gasolineras al mejor precio. ⛽🔧"
-    )
-    st.markdown("---")
-    st.markdown("### Preguntas rápidas")
-    if st.button("¿Cómo registro mi coche?"):
-        st.session_state.messages.append({"role": "user", "content": "¿Cómo registro mi coche?"})
-        st.rerun()
-    if st.button("¿Cómo veo el historial de mi coche?"):
-        st.session_state.messages.append({"role": "user", "content": "¿Cómo veo el historial de mi coche?"})
-        st.rerun()
-    if st.button("Tengo un problema mecánico"):
-        st.session_state.messages.append({"role": "user", "content": "Mi coche tiene un problema mecánico, ¿qué hago?"})
-        st.rerun()
-    if st.button("¿Dónde encuentro talleres cercanos?"):
-        st.session_state.messages.append({"role": "user", "content": "¿Dónde encuentro talleres cercanos?"})
-        st.rerun()
-    if st.button("¿Qué ofrece la función GPS de Coche ID?"):
-        st.session_state.messages.append({"role": "user", "content": "¿Qué servicios ofrece la función GPS de Coche ID?"})
-        st.rerun()
+st.caption("Demo de Chatbot de Coche ID – Tu Asistente Interactivo")
 
 # --- Personalidad del bot ---
 SYSTEM_PROMPT = (
@@ -95,18 +68,11 @@ if "messages" not in st.session_state:
         {"role": "assistant", "content": "¡Hola! Soy el asistente de Coche ID 🚗 ¿Quieres ayuda con la app o con un problema mecánico?"}
     ]
 
-# --- Mostrar conversación previa ---
-for msg in st.session_state.messages:
-    if msg["role"] == "system":
-        continue
-    with st.chat_message("user" if msg["role"] == "user" else "assistant"):
-        st.markdown(msg["content"])
-
-# --- Input del usuario ---
-if prompt := st.chat_input("Escribe tu pregunta sobre Coche ID..."):
-    st.session_state.messages.append({"role": "user", "content": prompt})
+# --- Función para procesar preguntas (input o sidebar) ---
+def procesar_pregunta(pregunta):
+    st.session_state.messages.append({"role": "user", "content": pregunta})
     with st.chat_message("user"):
-        st.markdown(prompt)
+        st.markdown(pregunta)
 
     try:
         chat_completion = client.chat.completions.create(
@@ -120,3 +86,41 @@ if prompt := st.chat_input("Escribe tu pregunta sobre Coche ID..."):
     with st.chat_message("assistant"):
         st.markdown(reply)
     st.session_state.messages.append({"role": "assistant", "content": reply})
+
+# --- Sidebar con botones ---
+with st.sidebar:
+    st.header("ℹ️ Información")
+    st.write("Este chatbot responde dudas sobre la app **Coche ID**. ")
+    st.write(
+        "Puede ayudarte a resolver **problemas mecánicos comunes** "
+        "y recomendarte servicios adicionales con la **función GPS**, "
+        "como encontrar talleres cercanos o gasolineras al mejor precio. ⛽🔧"
+    )
+    st.markdown("---")
+    st.markdown("### Preguntas rápidas")
+
+    if st.button("¿Cómo registro mi coche?"):
+        procesar_pregunta("¿Cómo registro mi coche?")
+
+    if st.button("¿Cómo veo el historial de mi coche?"):
+        procesar_pregunta("¿Cómo veo el historial de mi coche?")
+
+    if st.button("Tengo un problema mecánico"):
+        procesar_pregunta("Mi coche tiene un problema mecánico, ¿qué hago?")
+
+    if st.button("¿Dónde encuentro talleres cercanos?"):
+        procesar_pregunta("¿Dónde encuentro talleres cercanos?")
+
+    if st.button("¿Qué ofrece la función GPS de Coche ID?"):
+        procesar_pregunta("¿Qué servicios ofrece la función GPS de Coche ID?")
+
+# --- Mostrar conversación previa ---
+for msg in st.session_state.messages:
+    if msg["role"] == "system":
+        continue
+    with st.chat_message("user" if msg["role"] == "user" else "assistant"):
+        st.markdown(msg["content"])
+
+# --- Input del usuario ---
+if prompt := st.chat_input("Escribe tu pregunta sobre Coche ID..."):
+    procesar_pregunta(prompt)
