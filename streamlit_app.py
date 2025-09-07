@@ -19,18 +19,19 @@ st.markdown("""
     /* Fondo general */
     .stApp {
         background-color: #f4f6f9; /* gris neutro claro */
-        color: #212121; /* texto en gris oscuro para contraste */
+        color: #212121; /* texto principal en gris oscuro */
     }
 
     /* Mensajes del usuario (derecha, azul sobrio) */
     [data-testid="stChatMessage"][data-testid="user"] {
         background-color: #1976d2; /* azul profesional */
-        color: white;
+        color: #ffffff;
         border-radius: 18px 18px 0px 18px;
         padding: 10px; margin: 6px 0;
         max-width: 70%;
         margin-left: auto;
         box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+        word-wrap: break-word;
     }
 
     /* Mensajes del asistente (izquierda, gris claro) */
@@ -42,23 +43,33 @@ st.markdown("""
         max-width: 70%;
         margin-right: auto;
         box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+        word-wrap: break-word;
     }
 
     /* Sidebar */
     [data-testid="stSidebar"] {
-        background-color: #263238; /* gris oscuro neutro */
-        color: #ffffff; /* letras blancas */
+        background-color: #263238; /* gris oscuro */
+        color: #ffffff; /* texto blanco */
     }
 
     /* Botones del sidebar */
     [data-testid="stSidebar"] button {
         background-color: #1976d2 !important; /* azul profesional */
-        color: white !important;
+        color: #ffffff !important;            /* texto blanco forzado */
         border-radius: 8px;
         border: none;
+        font-weight: 600;                     /* más grosor para legibilidad */
+        text-shadow: 0px 0px 2px rgba(0,0,0,0.4); /* fix para iPhone/Safari */
     }
+
+    /* Hover de botones */
     [data-testid="stSidebar"] button:hover {
-        background-color: #0d47a1 !important; /* azul más oscuro al pasar el ratón */
+        background-color: #0d47a1 !important; /* azul más oscuro */
+        color: #ffffff !important;
+    }
+
+    /* Forzar color en cualquier texto interno de botones (fix iOS) */
+    [data-testid="stSidebar"] button * {
         color: #ffffff !important;
     }
     </style>
