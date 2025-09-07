@@ -22,35 +22,37 @@ st.markdown("""
         color: #212121;
     }
 
-    /* Mensajes del usuario (derecha, azul sobrio) */
+    /* Mensajes del usuario */
     [data-testid="stChatMessage"][data-testid="user"] {
-        background-color: #1976d2 !important;
-        border-radius: 18px 18px 0px 18px;
-        padding: 10px; margin: 6px 0;
-        max-width: 70%;
+        background-color: #ff9800 !important;  /* naranja vivo */
+        color: #212121 !important;            /* texto oscuro para contraste */
+        border-radius: 16px;
+        padding: 12px; margin: 8px 0;
+        max-width: 75%;
         margin-left: auto;
-        box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+        box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
     }
     [data-testid="stChatMessage"][data-testid="user"] * {
-        color: #ffffff !important;   /* texto siempre blanco */
+        color: #212121 !important;            /* texto siempre oscuro */
     }
 
-    /* Mensajes del asistente (izquierda, gris claro) */
+    /* Mensajes del asistente */
     [data-testid="stChatMessage"][data-testid="assistant"] {
-        background-color: #e0e0e0 !important;
-        border-radius: 18px 18px 18px 0px;
-        padding: 10px; margin: 6px 0;
-        max-width: 70%;
+        background-color: #1976d2 !important; /* azul profesional */
+        color: #ffffff !important;
+        border-radius: 16px;
+        padding: 12px; margin: 8px 0;
+        max-width: 75%;
         margin-right: auto;
-        box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+        box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
     }
     [data-testid="stChatMessage"][data-testid="assistant"] * {
-        color: #212121 !important;   /* texto siempre oscuro */
+        color: #ffffff !important;            /* texto siempre blanco */
     }
 
     /* Sidebar */
     [data-testid="stSidebar"] {
-        background-color: #263238 !important; /* gris oscuro neutro */
+        background-color: #263238 !important;
         color: #ffffff !important;
     }
 
@@ -61,7 +63,6 @@ st.markdown("""
         border-radius: 8px;
         border: none;
         font-weight: 600;
-        text-shadow: 0px 0px 2px rgba(0,0,0,0.4);
     }
     [data-testid="stSidebar"] button:hover {
         background-color: #0d47a1 !important;
@@ -72,7 +73,6 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
-
 # --- Encabezado principal ---
 st.image(
     "https://raw.githubusercontent.com/publicidadonline86-cpu/coche-id-chatbot/refs/heads/main/Logo.png",
