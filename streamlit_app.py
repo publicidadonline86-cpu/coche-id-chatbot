@@ -13,71 +13,11 @@ st.set_page_config(
     layout="centered"
 )
 
-# --- CSS para personalizar estilo ---
-st.markdown("""
-    <style>
-    /* Fondo general */
-    .stApp {
-        background-color: #f4f6f9;
-        color: #212121;
-    }
-
-    /* Mensajes del usuario */
-    [data-testid="stChatMessage"][data-testid="user"] {
-        background-color: #ff9800 !important;  /* naranja vivo */
-        color: #212121 !important;            /* texto oscuro para contraste */
-        border-radius: 16px;
-        padding: 12px; margin: 8px 0;
-        max-width: 75%;
-        margin-left: auto;
-        box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
-    }
-    [data-testid="stChatMessage"][data-testid="user"] * {
-        color: #212121 !important;            /* texto siempre oscuro */
-    }
-
-    /* Mensajes del asistente */
-    [data-testid="stChatMessage"][data-testid="assistant"] {
-        background-color: #1976d2 !important; /* azul profesional */
-        color: #ffffff !important;
-        border-radius: 16px;
-        padding: 12px; margin: 8px 0;
-        max-width: 75%;
-        margin-right: auto;
-        box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
-    }
-    [data-testid="stChatMessage"][data-testid="assistant"] * {
-        color: #ffffff !important;            /* texto siempre blanco */
-    }
-
-    /* Sidebar */
-    [data-testid="stSidebar"] {
-        background-color: #263238 !important;
-        color: #ffffff !important;
-    }
-
-    /* Botones del sidebar */
-    [data-testid="stSidebar"] button {
-        background-color: #1976d2 !important;
-        color: #ffffff !important;
-        border-radius: 8px;
-        border: none;
-        font-weight: 600;
-    }
-    [data-testid="stSidebar"] button:hover {
-        background-color: #0d47a1 !important;
-        color: #ffffff !important;
-    }
-    [data-testid="stSidebar"] button * {
-        color: #ffffff !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
 # --- Encabezado principal ---
 st.image(
-    "https://raw.githubusercontent.com/publicidadonline86-cpu/coche-id-chatbot/refs/heads/main/Logo.png",
-    width=200
-)  # Cambia la URL por la de tu logo en GitHub
+    "https://raw.githubusercontent.com/TU-USUARIO/coche-id-chatbot/main/logo.png",
+    width=120
+)  # Cambia por tu logo en GitHub
 st.title("🚗 Chatbot de Coche ID")
 st.caption("Demo de Chatbot de Coche ID – Tu Asistente Interactivo")
 
@@ -91,31 +31,76 @@ SYSTEM_PROMPT = (
     "como encontrar gasolineras al mejor precio o talleres disponibles en la zona."
 )
 
-# --- Memoria de la conversación ---
+# --- Inicializar memoria de la conversación ---
 if "messages" not in st.session_state:
     st.session_state.messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "assistant", "content": "¡Hola! Soy el asistente de Coche ID 🚗 ¿Quieres ayuda con la app o con un problema mecánico?"}
     ]
 
-# --- Función para procesar preguntas (input o sidebar) ---
-def procesar_pregunta(pregunta):
-    st.session_state.messages.append({"role": "user", "content": pregunta})
-    with st.chat_message("user"):
-        st.markdown(pregunta)
+# --- Función para mostrar mensajes en burbujas ---
+def mostrar_mensaje(role, content):
+    if role == "user":
+        st.markdown(
+            f"""
+            <div style="
+                background-color: #ff9800;
+                color: #212121;
+                border-radius: 16px;
+                padding: 12px;
+                margin: 8px 0;
+                max-width: 75%;
+                margin-left: auto;
+                box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+            ">
+                {content}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    elif role == "assistant":
+        st.markdown(
+            f"""
+            <div style="
+                background-color: #1976d2;
+                color: #ffffff;
+                border-radius: 16px;
+                padding: 12px;
+                margin: 8px 0;
+                max-width: 75%;
+                margin-right: auto;
+                box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+            ">
+                {content}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
+# --- Mostrar conversación previa ---
+for msg in st.session_state.messages:
+    if msg["role"] != "system":
+        mostrar_mensaje(msg["role"], msg["content"])
+
+# --- Función para procesar preguntas ---
+def procesar_pregunta(pregunta):
+    # Mostrar pregunta del usuario
+    st.session_state.messages.append({"role": "user", "content": pregunta})
+    mostrar_mensaje("user", pregunta)
+
+    # Llamada al modelo de Groq
     try:
         chat_completion = client.chat.completions.create(
-            model="llama-3.1-8b-instant",  # modelo de Groq
+            model="llama-3.1-8b-instant",
             messages=st.session_state.messages
         )
         reply = chat_completion.choices[0].message.content
     except Exception as e:
         reply = f"⚠️ Error: {e}"
 
-    with st.chat_message("assistant"):
-        st.markdown(reply)
+    # Mostrar respuesta del asistente
     st.session_state.messages.append({"role": "assistant", "content": reply})
+    mostrar_mensaje("assistant", reply)
 
 # --- Sidebar con botones ---
 with st.sidebar:
@@ -143,13 +128,6 @@ with st.sidebar:
 
     if st.button("¿Qué ofrece la función GPS de Coche ID?"):
         procesar_pregunta("¿Qué servicios ofrece la función GPS de Coche ID?")
-
-# --- Mostrar conversación previa ---
-for msg in st.session_state.messages:
-    if msg["role"] == "system":
-        continue
-    with st.chat_message("user" if msg["role"] == "user" else "assistant"):
-        st.markdown(msg["content"])
 
 # --- Input del usuario ---
 if prompt := st.chat_input("Escribe tu pregunta sobre Coche ID..."):
