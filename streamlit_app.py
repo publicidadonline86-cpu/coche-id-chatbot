@@ -1,29 +1,29 @@
 import os
 from dotenv import load_dotenv
 import streamlit as st
-from openai import OpenAI
+from groq import Groq
 
-# Cargar clave secreta desde .env (en local) o desde Secrets (en la nube)
+# Cargar clave secreta (desde .env en local o desde Secrets en la nube)
 load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 # Configuración de la página
 st.set_page_config(page_title="Chatbot Coche ID", page_icon="🚗")
 st.title("🚗 Chatbot de Coche ID")
-st.caption("Demo interactiva para el TFM de Pepe")
+st.caption("Demo del Chatbot que integrará Coche ID")
 
 # Mensaje de sistema (personalidad del bot)
 SYSTEM_PROMPT = (
     "Eres el asistente oficial de la app Coche ID. "
     "Respondes en español, de forma clara y sencilla. "
-    "Puedes explicar funciones como registrar un coche, ver el historial o configurar recordatorios."
+    "Puedes explicar funciones como registrar un coche, ver el historial o configurar recordatorios, además puedes resolver dudas de mecanica"
 )
 
 # Guardar mensajes
 if "messages" not in st.session_state:
     st.session_state.messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "assistant", "content": "¡Hola! Soy el asistente de Coche ID. ¿En qué te ayudo?"}
+        {"role": "assistant", "content": "¡Hola! Soy el asistente de Coche ID. ¿En qué puedo ayudarte?"}
     ]
 
 # Mostrar conversación anterior
@@ -40,11 +40,12 @@ if prompt := st.chat_input("Escribe tu pregunta sobre Coche ID..."):
         st.markdown(prompt)
 
     try:
-        completion = client.chat.completions.create(
-            model="gpt-4o-mini",
+        # Llamada al modelo de Groq
+        chat_completion = client.chat.completions.create(
+            model="llama-3.1-8b-instant",  # modelo de Groq (puedes cambiarlo)
             messages=st.session_state.messages
         )
-        reply = completion.choices[0].message.content
+        reply = chat_completion.choices[0].message.content
     except Exception as e:
         reply = f"⚠️ Error: {e}"
 
